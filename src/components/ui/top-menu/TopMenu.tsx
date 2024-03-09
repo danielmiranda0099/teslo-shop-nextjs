@@ -17,8 +17,8 @@ export function TopMenu() {
 
       <div className="hidden sm:block">
         <Link href="/category/men" className="m-2 p-2 rounded-md transition-colors hover:bg-gray-100">Hombres</Link>
-        <Link href="/category/men" className="m-2 p-2 rounded-md transition-colors hover:bg-gray-100">Mujeres</Link>
-        <Link href="/category/men" className="m-2 p-2 rounded-md transition-colors hover:bg-gray-100">Niños</Link>
+        <Link href="/category/womens" className="m-2 p-2 rounded-md transition-colors hover:bg-gray-100">Mujeres</Link>
+        <Link href="/category/kids" className="m-2 p-2 rounded-md transition-colors hover:bg-gray-100">Niños</Link>
       </div>
 
       <div className="flex items-center">
