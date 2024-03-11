@@ -1,21 +1,33 @@
+import { ProductsGrid } from "@/components/products";
+import { Title } from "@/components/ui";
+import { initialData } from "@/seed/seed";
 import { notFound } from "next/navigation";
+import { Category } from '@/interfaces'
 
 interface Props {
   params: {
-    id: string;
-  }
+    id: Category;
+  };
 }
 
-const CATEGORIES = ["men", "womens", "kids"];
+const PRODUCTS = initialData.products;
+const CATEGORIES: Category[] = ['men', 'women', 'kid', 'unisex'];
 
-export default function CategoryPage({params}: Props) {
-  const { id } = params;
+export default function CategoryPage({ params }: Props) {
+  const { id: category } = params;
 
-  if(!CATEGORIES.includes(id)){
+  if (!CATEGORIES.includes(category)) {
     notFound();
   }
 
+  const productsByCategory = PRODUCTS.filter(
+    (product) => product.gender === category
+  );
+
   return (
-    <div>CategoryPage { id }</div>
-  )
+    <>
+      <Title title={ category.toUpperCase() } subtitle={`Todos Los Productos De ${category}`} className="mb-2" />
+      <ProductsGrid products={productsByCategory} />
+    </>
+  );
 }
