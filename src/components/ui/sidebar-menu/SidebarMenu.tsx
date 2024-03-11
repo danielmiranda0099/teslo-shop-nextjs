@@ -1,27 +1,52 @@
-'use client'
+"use client";
+import { useUI } from "@/store";
+import clsx from "clsx";
 import Link from "next/link";
-import { IoCloseOutline, IoLogInOutline, IoLogOutOutline, IoPeopleOutline, IoPersonOutline, IoSearchOutline, IoShirtOutline, IoTicketOutline } from "react-icons/io5";
-
+import {
+  IoCloseOutline,
+  IoLogInOutline,
+  IoLogOutOutline,
+  IoPeopleOutline,
+  IoPersonOutline,
+  IoSearchOutline,
+  IoShirtOutline,
+  IoTicketOutline,
+} from "react-icons/io5";
 
 export function SidebarMenu() {
+  const isSidebarMenuOpen = useUI((state) => state.isSideMenuOpen);
+  const CloseSideMenu = useUI((state) => state.CloseSideMenu);
+
   return (
     <div>
-      <div className="fixed top-0 left-0 w-screen h-screen z-10 bg-black opacity-30">
+      {isSidebarMenuOpen && (
+        <>
+          <div className="fixed top-0 left-0 w-screen h-screen z-10 bg-black opacity-30"></div>
 
-      </div>
+          <div
+            onClick={() => CloseSideMenu()}
+            className="fade-in fixed top-0 left-0 w-screen h-screen z-10 backdrop-filter backdrop-blur-sm"
+          ></div>
+        </>
+      )}
 
-      <div className="fade-in fixed top-0 left-0 w-screen h-screen z-10 backdrop-filter backdrop-blur-sm">
-      </div>      
-
-      <nav className="fixed p-5 right-0 top-0 w-[500px] h-screen bg-white z-20 shadow-2xl transform transition-all duration-200">
-        <IoCloseOutline size={50}
-        className="absolute top-5 right-5 cursor-pointer"
-        onClick={() => console.log('oli')}
+      <nav
+        className={clsx(
+          "fixed p-5 right-0 top-0 w-[500px] h-screen bg-white z-20 shadow-2xl transform transition-all duration-200",
+          {
+            "translate-x-full": !isSidebarMenuOpen,
+          }
+        )}
+      >
+        <IoCloseOutline
+          size={50}
+          className="absolute top-5 right-5 cursor-pointer"
+          onClick={() => CloseSideMenu()}
         />
 
         <div className="relative mt-14">
-          <IoSearchOutline size={20} className="absolute top-2 left-2"  />
-          <input 
+          <IoSearchOutline size={20} className="absolute top-2 left-2" />
+          <input
             type="text"
             placeholder="Buscar"
             className="w-full bg-gray-50 rounded pl-10 py-1 pr-10 border-b-2 text-xl border-gray-200 focus:outline-none focus:border-blue-500"
@@ -87,5 +112,5 @@ export function SidebarMenu() {
         </Link>
       </nav>
     </div>
-  )
+  );
 }

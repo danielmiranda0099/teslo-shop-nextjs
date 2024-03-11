@@ -1,9 +1,12 @@
+'use client'
 import Link from "next/link";
  
 import { titleFont } from "@/fonts-next/fonts";
 import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
+import { useUI } from "@/store";
 
 export function TopMenu() {
+  const OpenSideMenu = useUI((state) => state.OpenSideMenu);
   return (
     <nav className="flex px-5 justify-between items-center w-full">
       <div>
@@ -33,7 +36,9 @@ export function TopMenu() {
           </div>
         </Link>
 
-        <button className="m-2 p-2 rounded-md transition-colors hover:bg-gray-100">
+        <button 
+        onClick={ () => OpenSideMenu()}
+        className="m-2 p-2 rounded-md transition-colors hover:bg-gray-100">
           Menú
         </button>
       </div>
