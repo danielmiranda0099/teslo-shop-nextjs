@@ -1,3 +1,5 @@
+export { QuantitySelector } from './QuantitySelector';
+
 export { SizeSelector } from './SizeSelector';
 
 export { ProductsGrid } from './ProductsGrid';
