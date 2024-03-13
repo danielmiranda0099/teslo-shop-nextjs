@@ -2,16 +2,15 @@ import { notFound } from "next/navigation";
 
 import { initialData } from "@/seed/seed";
 import { titleFont } from "@/fonts-next/fonts";
-import { QuantitySelector, SizeSelector } from "@/components/products";
+import { ProductMobileSlideShow, ProductSlideShow, QuantitySelector, SizeSelector } from "@/components/products";
 
 interface Props {
   params: {
     slug: string;
-  }
+  };
 }
 
-export default function ProductPage({params: {slug}}: Props) {
-
+export default function ProductPage( {params: {slug} }: Props) {
   const product = initialData.products.find((product) => product.slug === slug );
 
   if(!product){
@@ -21,7 +20,9 @@ export default function ProductPage({params: {slug}}: Props) {
   return (
     <div className="mt-5 mb-20 grid grid-cols-1 md:grid-cols-3 gap-3">
       <div className="col-span-1 md:col-span-2">
-        
+        <ProductMobileSlideShow title={product.title} images={product.images} className="block md:hidden" />
+
+        <ProductSlideShow title={product.title} images={product.images} className="hidden md:block" />
       </div>
       
       <div className="col-span-1 px-5">

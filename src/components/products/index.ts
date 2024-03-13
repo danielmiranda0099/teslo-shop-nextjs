@@ -1,6 +1,7 @@
-export { QuantitySelector } from './QuantitySelector';
+export { ProductMobileSlideShow } from "./ProductMobileSlideShow";
+export { ProductSlideShow } from "./ProductSlideShow";
+export { QuantitySelector } from "./QuantitySelector";
+export { SizeSelector } from "./SizeSelector";
+export { ProductsGrid } from "./ProductsGrid";
+export { ProductGridItem } from "./ProductGridItem";
 
-export { SizeSelector } from './SizeSelector';
-
-export { ProductsGrid } from './ProductsGrid';
-export { ProductGridItem } from './ProductGridItem';
