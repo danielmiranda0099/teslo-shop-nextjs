@@ -2,10 +2,16 @@ import { GetPaginatedProductWithImages } from "@/actions/product";
 import { ProductsGrid } from "@/components/products";
 import { Title } from "@/components/ui";
 
-export default async function Home() {
-  const { products } = await GetPaginatedProductWithImages() || { products: [] };
+interface Props {
+  searchParams: {
+    page?: string;
+  }
+}
 
-  console.log(products);
+export default async function Home({ searchParams }: Props) {
+  const page = searchParams.page ? parseInt( searchParams.page ) : 1;
+  const { products } = await GetPaginatedProductWithImages({page}) || { products: [] };
+
   return (
     <>
       <Title title="Tienda" subtitle="Todos Los Poductos" className="mb-2" />
