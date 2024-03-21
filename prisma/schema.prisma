@@ -14,6 +14,7 @@ enum Size {
   L
   XL
   XXL
+  XXXL
 }
 
 enum Gender {
@@ -36,7 +37,7 @@ model Product {
   description String
   inStock     Int
   sizes       Size[]   @default([])
-  slud        String   @unique
+  slug        String   @unique
   tags        String[] @default([])
   gender      Gender
 
