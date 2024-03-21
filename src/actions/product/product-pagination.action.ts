@@ -31,7 +31,12 @@ export async function GetPaginatedProductWithImages({page=1, take=6}: Props) {
       }
     });
 
+    const totalCount = await prisma.product.count({});
+    const totalPages = Math.ceil( totalCount / take );
+
     return {
+      currentPage: page,
+      totalPages: totalPages,
       products: products.map( (product) => (
         {
           ...product,
