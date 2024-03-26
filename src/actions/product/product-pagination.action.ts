@@ -1,15 +1,19 @@
 'use server'
 
+import { Gender } from "@/interfaces";
 import prisma from "@/lib/prisma"
 
 interface Props {
   page?: number;
   take?: number;
+  filter?: Gender;
 }
 
-export async function GetPaginatedProductWithImages({page=1, take=6}: Props) {
+export async function GetPaginatedProductWithImages({page=1, take=6, filter}: Props) {
   page = Number(page);
   take = Number(take);
+
+  console.log(filter)
   
   if( isNaN( page ) ) page = 1;
   if( page < 1 ) page = 1;
@@ -28,11 +32,15 @@ export async function GetPaginatedProductWithImages({page=1, take=6}: Props) {
             url: true,
           }
         }
+      },
+      where: {
+        gender: filter
       }
     });
 
-    const totalCount = await prisma.product.count({});
+    const totalCount = await prisma.product.count({where: {gender: filter}});
     const totalPages = Math.ceil( totalCount / take );
+    console.log("total page", {totalPages, filter, totalCount})
 
     return {
       currentPage: page,
