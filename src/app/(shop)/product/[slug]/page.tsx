@@ -4,11 +4,34 @@ import { notFound } from "next/navigation";
 import { titleFont } from "@/fonts-next/fonts";
 import { ProductMobileSlideShow, ProductSlideShow, QuantitySelector, SizeSelector, StockLabel } from "@/components/products";
 import { GetProductsBySlug } from "@/actions/product";
+import { Metadata, ResolvingMetadata } from "next";
 
 interface Props {
   params: {
     slug: string;
   };
+}
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const slug = params.slug
+ 
+  const product = await GetProductsBySlug(slug);
+  // optionally access and extend (rather than replace) parent metadata
+  // const previousImages = (await parent).openGraph?.images || []
+ 
+  return {
+    title: product?.title ?? "Producto No Encontrado",
+    description: product?.description ?? "",
+    openGraph: {
+      title: product?.title ?? "Producto No Encontrado",
+      description: product?.description ?? "",
+      images: [`/product/${ product?.images[1] }`],
+    },
+  }
 }
 
 export default async function ProductBySlugPage( {params: {slug} }: Props) {
