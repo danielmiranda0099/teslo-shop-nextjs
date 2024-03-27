@@ -2,7 +2,7 @@ export const revalidate = 604800; //7 dias
 import { notFound } from "next/navigation";
 
 import { titleFont } from "@/fonts-next/fonts";
-import { ProductMobileSlideShow, ProductSlideShow, QuantitySelector, SizeSelector } from "@/components/products";
+import { ProductMobileSlideShow, ProductSlideShow, QuantitySelector, SizeSelector, StockLabel } from "@/components/products";
 import { GetProductsBySlug } from "@/actions/product";
 
 interface Props {
@@ -28,6 +28,8 @@ export default async function ProductBySlugPage( {params: {slug} }: Props) {
       </div>
       
       <div className="col-span-1 px-5">
+        <StockLabel slug={slug} />
+        
         <h1 className={`${titleFont.className} antialiased font-bold text-xl`}>
           {product.title}
         </h1>
