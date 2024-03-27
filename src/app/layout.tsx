@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { inter } from "@/fonts-next/fonts";
 
-
-
 export const metadata: Metadata = {
-  title: 'Teslo | Shop',
+  title: {
+    template: '%s - Teslo | Shop',
+    default: 'Home - Teslo | Shop'
+  },
   description: 'Una tienda virtual de productos',
 }
 
