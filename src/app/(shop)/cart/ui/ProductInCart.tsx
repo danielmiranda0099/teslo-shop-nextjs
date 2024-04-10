@@ -9,11 +9,12 @@ import { useEffect, useState } from "react";
 
 export function ProductInCart() {
   const [isLoadedComponent, setIsLoadedComponent] = useState(false);
-
+  
+  const productsInCart = useCartStore((state) => state.cart);
   const updateProductQuantity = useCartStore(
     (state) => state.updateProductQuantity
   );
-  const productsInCart = useCartStore((state) => state.cart);
+  const removeProduct = useCartStore((state) => state.removeProduct);
 
   useEffect(() => {
     setIsLoadedComponent(true);
@@ -61,7 +62,7 @@ export function ProductInCart() {
               }
             />
 
-            <button className="underline mt-3">Remover</button>
+            <button onClick={() => removeProduct(product)} className="underline mt-3">Remover</button>
           </div>
         </div>
       ))}
