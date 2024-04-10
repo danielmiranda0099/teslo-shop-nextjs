@@ -1,7 +1,8 @@
 "use client";
 
 import { QuantitySelector, SizeSelector } from "@/components/products";
-import { Product, Size } from "@/interfaces";
+import { CartInProduct, Product, Size } from "@/interfaces";
+import { useCartStore } from "@/store";
 import { useState } from "react";
 
 interface Props {
@@ -13,14 +14,30 @@ export function AddToCart({ product }: Props) {
   const [quantity, setQuantity] = useState<number>(1);
   const [isErrorSelectedSize, setIsErrorSelectedSize] = useState(false);
 
-  const AddProductToCart = () => {
+  const AddProductToCart = useCartStore( state => state.addProductToCart );
+
+  const OnAddProductToCart = () => {
     if (!size) {
       setIsErrorSelectedSize(true);
       return;
     }
 
     setIsErrorSelectedSize(false);
-    console.log({ size, quantity });
+    
+    const cartProduct: CartInProduct = {
+      id: product.id,
+      slug: product.slug,
+      title: product.title,
+      price:product.price,
+      quantity: quantity,
+      size: size,
+      image: product.images[0]
+    }
+
+    AddProductToCart(cartProduct);
+
+    setQuantity(1);
+    setSize(undefined);
   };
 
   return (
@@ -34,7 +51,7 @@ export function AddToCart({ product }: Props) {
 
       <QuantitySelector quantity={quantity} OnQuantityChanged={setQuantity} />
 
-      <button onClick={AddProductToCart} className="btn-primary my-5">
+      <button onClick={OnAddProductToCart} className="btn-primary my-5">
         Agregar Al Carrito
       </button>
     </>
