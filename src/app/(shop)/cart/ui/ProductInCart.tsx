@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { QuantitySelector } from "@/components/products";
 import { useCartStore } from "@/store";
@@ -10,48 +10,61 @@ import { useEffect, useState } from "react";
 export function ProductInCart() {
   const [isLoadedComponent, setIsLoadedComponent] = useState(false);
 
-  const productsInCart = useCartStore( state => state.cart);
+  const updateProductQuantity = useCartStore(
+    (state) => state.updateProductQuantity
+  );
+  const productsInCart = useCartStore((state) => state.cart);
 
   useEffect(() => {
     setIsLoadedComponent(true);
-  } , [])
+  }, []);
 
-  if(isLoadedComponent && productsInCart.length <= 0){
-    redirect('/empty');
+  if (isLoadedComponent && productsInCart.length <= 0) {
+    redirect("/empty");
   }
 
-  if(!isLoadedComponent){
-    return <p>Loading...</p>
+  if (!isLoadedComponent) {
+    return <p>Loading...</p>;
   }
 
   return (
     <>
-    {productsInCart.map((product) => (
-      <div key={`${product.slug}-${product.size}`} className="flex mb-5">
-        <Image
-          src={`/products/${product.image}`}
-          alt={product.title}
-          width={100}
-          height={100}
-          className="mr-5 rounded"
-          style={{
-            width: '100px',
-            height: '100px'
-          }}
-        />
+      {productsInCart.map((product) => (
+        <div key={`${product.slug}-${product.size}`} className="flex mb-5">
+          <Image
+            src={`/products/${product.image}`}
+            alt={product.title}
+            width={100}
+            height={100}
+            className="mr-5 rounded"
+            style={{
+              width: "100px",
+              height: "100px",
+            }}
+          />
 
-        <div>
-          <Link 
-            className="cursor-pointer hover:underline"
-            href={`/product/${product.slug}`}> <span className="font-semibold">{product.size}</span> - {product.title}</Link>
-          <p>${product.price}</p>
+          <div>
+            <Link
+              className="cursor-pointer hover:underline"
+              href={`/product/${product.slug}`}
+            >
+              {" "}
+              <span className="font-semibold">{product.size}</span> -{" "}
+              {product.title}
+            </Link>
+            <p>${product.price}</p>
 
-          <QuantitySelector quantity={1} OnQuantityChanged={() => null}/>
+            <QuantitySelector
+              quantity={product.quantity}
+              OnQuantityChanged={(quantity) =>
+                updateProductQuantity(product, quantity)
+              }
+            />
 
-          <button className="underline mt-3">Remover</button>
+            <button className="underline mt-3">Remover</button>
+          </div>
         </div>
-      </div>
-    ))}
+      ))}
     </>
-  )
+  );
 }
