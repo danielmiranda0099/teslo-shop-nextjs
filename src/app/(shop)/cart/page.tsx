@@ -1,22 +1,9 @@
-import { QuantitySelector } from "@/components/products";
 import { Title } from "@/components/ui";
-import { initialData } from "@/seed/seed";
-import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { ProductInCart } from "./ui";
 
-const PRODUCTS_IN_CART = [
-  initialData.products[0],
-  initialData.products[1],
-  initialData.products[2],
-];
 
 export default function CartPage() {
-
-  if(PRODUCTS_IN_CART.length <= 0){
-    redirect('/empty');
-  }
-
   return (
     <div className="flex justify-center items-center mb-72 px-10 sm:px-0">
       <div className="flex flex-col w-[1000px]">
@@ -29,30 +16,7 @@ export default function CartPage() {
               Continuar Comprando
             </Link>
 
-            {PRODUCTS_IN_CART.map((product) => (
-              <div key={product.slug} className="flex mb-5">
-                <Image
-                  src={`/products/${product.images[0]}`}
-                  alt={product.title}
-                  width={100}
-                  height={100}
-                  className="mr-5 rounded"
-                  style={{
-                    width: '100px',
-                    height: '100px'
-                  }}
-                />
-
-                <div>
-                  <p>{product.title}</p>
-                  <p>${product.price}</p>
-
-                  <QuantitySelector quantity={1} />
-
-                  <button className="underline mt-3">Remover</button>
-                </div>
-              </div>
-            ))}
+            <ProductInCart />
           </div>
 
           <div className="bg-white rounded-xl shadow-xl p-7 h-fit">
