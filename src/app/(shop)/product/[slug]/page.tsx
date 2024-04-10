@@ -5,6 +5,7 @@ import { titleFont } from "@/fonts-next/fonts";
 import { ProductMobileSlideShow, ProductSlideShow, QuantitySelector, SizeSelector, StockLabel } from "@/components/products";
 import { GetProductsBySlug } from "@/actions/product";
 import { Metadata, ResolvingMetadata } from "next";
+import { AddToCart } from "./ui";
 
 interface Props {
   params: {
@@ -59,11 +60,7 @@ export default async function ProductBySlugPage( {params: {slug} }: Props) {
 
         <p className="text-lg mb-5">${product.price}</p>
 
-        <SizeSelector availableSizes={product.sizes} selectedSize={product.sizes[0]}/>
-
-        <QuantitySelector quantity={2} />
-
-        <button className="btn-primary my-5">Agregar Al Carrito</button>
+        <AddToCart product={product} />
 
         <h3 className="font-bold text-sm">Descripción</h3>
         <p className="font-light">{product.description}</p>
