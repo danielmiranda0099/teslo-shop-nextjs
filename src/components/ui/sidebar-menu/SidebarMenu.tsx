@@ -54,7 +54,8 @@ export function SidebarMenu() {
         </div>
 
         <Link
-          href="/"
+          href="/profile"
+          onClick={() => CloseSideMenu()}
           className="flex items-center mt-10 p-2 hover:bg-gray-200 rounded transition-all"
         >
           <IoPersonOutline size={30} />
