@@ -1,6 +1,8 @@
 "use client";
+import { RegisterUser } from "@/actions/auth";
 import clsx from "clsx";
 import Link from "next/link";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 type FormInputs = {
@@ -10,11 +12,19 @@ type FormInputs = {
 };
 
 export function RegisterForm() {
+  const [errorMessage, setErrorMessage] = useState("")
   const { register, handleSubmit, formState: {errors} } = useForm<FormInputs>();
 
   const OnSubmit = async(data: FormInputs) => {
     const { email, name, password } = data;
-    console.log({ email, name, password })
+    const newUser = await RegisterUser(name, email, password);
+
+    if( !newUser.ok){
+      setErrorMessage(newUser?.message!);
+      return;
+    }
+    setErrorMessage('');
+    console.log({newUser})
   }
 
   return (
@@ -56,9 +66,15 @@ export function RegisterForm() {
         {...register('password', { required: true})}
       />
 
+      {
+        errorMessage && (
+          <span className="text-red-900 bg-red-400 p-2 rounded-lg mb-4 text-center">{errorMessage}</span>
+        )
+      }
+
       <button className="btn-primary">Crear una nueva cuenta</button>
 
-      {/* divisor l ine */}
+      {/* divisor line */}
       <div className="flex items-center my-5">
         <div className="flex-1 border-t border-gray-500"></div>
         <div className="px-2 text-gray-800">O</div>
