@@ -21,7 +21,8 @@ export function SidebarMenu() {
 
   const { data:session } = useSession();
 
-  console.log(session)
+  const isAuthenticated = !!session?.user;
+  
 
   return (
     <div>
@@ -76,22 +77,31 @@ export function SidebarMenu() {
           <span className="ml-3 text-xl">Ordenes</span>
         </Link>
 
-        <Link
-          href="/auth/login"
-          onClick={() => CloseSideMenu()}
-          className="flex items-center mt-10 p-2 hover:bg-gray-200 rounded transition-all"
-        >
-          <IoLogInOutline size={30} />
-          <span className="ml-3 text-xl">Ingresar</span>
-        </Link>
+        {
+          !isAuthenticated && (
+            <Link
+            href="/auth/login"
+            onClick={() => CloseSideMenu()}
+            className="flex items-center mt-10 p-2 hover:bg-gray-200 rounded transition-all"
+          >
+            <IoLogInOutline size={30} />
+            <span className="ml-3 text-xl">Ingresar</span>
+          </Link>
+          )
+        }
+       
 
-        <button
+        {
+          isAuthenticated && (
+            <button
           onClick={ () => Logout()}
           className="flex w-full items-center mt-10 p-2 hover:bg-gray-200 rounded transition-all"
         >
           <IoLogOutOutline size={30} />
           <span className="ml-3 text-xl">Salir</span>
         </button>
+          )
+        }
 
         <div className="w-full h-px bg-gray-200 my-10"></div>
 
