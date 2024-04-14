@@ -1,5 +1,5 @@
 "use client";
-import { RegisterUser } from "@/actions/auth";
+import { Login, RegisterUser } from "@/actions/auth";
 import clsx from "clsx";
 import Link from "next/link";
 import { useState } from "react";
@@ -12,7 +12,8 @@ type FormInputs = {
 };
 
 export function RegisterForm() {
-  const [errorMessage, setErrorMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState("");
+
   const { register, handleSubmit, formState: {errors} } = useForm<FormInputs>();
 
   const OnSubmit = async(data: FormInputs) => {
@@ -23,8 +24,12 @@ export function RegisterForm() {
       setErrorMessage(newUser?.message!);
       return;
     }
+    
     setErrorMessage('');
-    console.log({newUser})
+    
+    await Login(email.toLowerCase(), password);
+
+    window.location.replace('/');
   }
 
   return (
