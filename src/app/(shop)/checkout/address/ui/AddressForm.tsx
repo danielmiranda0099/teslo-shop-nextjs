@@ -1,4 +1,5 @@
 "use client";
+import { Country } from "@/interfaces";
 import { useForm } from "react-hook-form";
 
 type FormInputs = {
@@ -13,7 +14,11 @@ type FormInputs = {
   rememberAddress: boolean;
 };
 
-export function AddressForm() {
+interface Props {
+  countries: Country[];
+}
+
+export function AddressForm({countries}: Props) {
   const {
     handleSubmit,
     register,
@@ -63,7 +68,11 @@ export function AddressForm() {
         <span>País</span>
         <select className="p-2 border rounded-md bg-gray-200" {...register('country', {required: true})}>
           <option value="">[ Seleccione ]</option>
-          <option value="CRI">Costa Rica</option>
+          {
+            countries.map( (country) => (
+              <option value={country.id} key={country.name}>{country.name}</option>
+            ))
+          }
         </select>
       </div>
 
