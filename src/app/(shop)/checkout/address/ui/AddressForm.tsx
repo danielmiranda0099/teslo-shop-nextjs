@@ -1,5 +1,5 @@
 "use client";
-import { SetUserAddress } from "@/actions";
+import { DeleteUserAddress, SetUserAddress } from "@/actions";
 import { Country } from "@/interfaces";
 import { useAddressStore } from "@/store";
 import { useSession } from "next-auth/react";
@@ -45,7 +45,7 @@ export function AddressForm({countries}: Props) {
     if(rememberAddress){
       SetUserAddress( restAddress,  session!.user.id);
     }else {
-
+      DeleteUserAddress(session!.user.id);
     }
   };
 
