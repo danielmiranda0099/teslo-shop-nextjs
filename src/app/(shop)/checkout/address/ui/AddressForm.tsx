@@ -3,6 +3,7 @@ import { DeleteUserAddress, SetUserAddress } from "@/actions";
 import { Address, Country } from "@/interfaces";
 import { useAddressStore } from "@/store";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
@@ -47,6 +48,8 @@ export function AddressForm({countries, userStoredAddress = INIT_USER_STORED_ADD
     }
   });
 
+  const router = useRouter();
+
   const { data:session } = useSession({
     required: true
   });
@@ -64,6 +67,8 @@ export function AddressForm({countries, userStoredAddress = INIT_USER_STORED_ADD
     }else {
       await DeleteUserAddress(session!.user.id);
     }
+
+    router.push('/checkout');
   };
 
   useEffect(() => {
