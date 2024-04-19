@@ -33,6 +33,7 @@ async function CreateOrRemplaceAddress(address: Address, userId: string) {
       lastname: address.lastName,
       userId,
       countryId: address.country,
+      city: address.city
     }
 
     if( !storedAddress ){
