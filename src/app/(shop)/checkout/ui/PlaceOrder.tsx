@@ -7,11 +7,23 @@ import { useEffect, useState } from "react"
 
 export function PlaceOrder() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false)
 
   const address = useAddressStore( state => state.address);
   const {subTotal, tax, total, totalItemsInCart} = useCartStore( state => state.getSummaryOrden());
+  const cart = useCartStore( state => state.cart);
 
+  const OnPlacingOrder = async() => {
+    setIsPlacingOrder(true);
 
+    const productsToOrder = cart.map( product => ({
+      productId: product.id,
+      quantity: product.quantity,
+      size: product.size,
+    }))
+
+    console.log({address, productsToOrder})
+  } 
 
   useEffect( () => {
     setIsLoaded(true);
@@ -67,9 +79,13 @@ export function PlaceOrder() {
         </p>
       </div>
 
+      <div className="bg-red-300 p-2 rounded-md fade-in mb-4">
+        <span className="text-red-950 ">Ups! Al Parecer Hubo Un Error Con La Orden.</span>
+      </div>
       <button 
       // href="/orders/123" 
-      className="flex btn-primary">
+      onClick={OnPlacingOrder}
+      className={`${isPlacingOrder ? 'flex btn-disabled' : 'flex btn-primary'}`}>
         Hacer Orden
       </button>
     </div>
